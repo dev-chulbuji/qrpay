@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">QRPay</string>
+
+    <!-- common -->
+
+    <!-- member -->
+    <string name="signup">회원가입</string>
+</resources>
