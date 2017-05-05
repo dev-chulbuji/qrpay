@@ -1,6 +1,8 @@
-package com.jitosoft.qrpay;
+package com.jitosoft.qrpay.presentation.util;
 
 import android.util.Log;
+
+import com.jitosoft.qrpay.BuildConfig;
 
 /**
  * Created by jihoon on 2017. 4. 28..

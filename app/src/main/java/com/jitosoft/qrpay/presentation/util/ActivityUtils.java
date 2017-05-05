@@ -1,4 +1,4 @@
-package com.jitosoft.qrpay;
+package com.jitosoft.qrpay.presentation.util;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

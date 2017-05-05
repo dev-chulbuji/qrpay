@@ -1,17 +1,15 @@
 package com.jitosoft.qrpay;
 
+import com.jitosoft.qrpay.data.repository.MemberDataRepository;
+import com.jitosoft.qrpay.domain.repository.MemberRepository;
+
 /**
  * Created by jihoon on 2017. 5. 1..
  */
 
 public class Injection {
 
-    public static TokenRepository provideTokenRepository() {
-        return new TokenRepository();
-    }
-
-
     public static MemberRepository provideMemberRepository() {
-        return new MemberRepository();
+        return MemberDataRepository.newInstance();
     }
 }
