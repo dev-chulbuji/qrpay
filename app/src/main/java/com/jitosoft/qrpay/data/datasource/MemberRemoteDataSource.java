@@ -3,7 +3,8 @@ package com.jitosoft.qrpay.data.datasource;
 import android.support.annotation.NonNull;
 
 import com.jitosoft.qrpay.data.entity.MemberEntity;
-import com.jitosoft.qrpay.presentation.util.LogUtils;
+import com.jitosoft.qrpay.data.net.QrpayService;
+import com.jitosoft.qrpay.data.net.Response;
 
 import io.reactivex.Flowable;
 
@@ -19,22 +20,26 @@ public class MemberRemoteDataSource implements MemberDataSource {
     public Flowable<MemberEntity> saveMember(@NonNull String email,
                                              @NonNull String nickname,
                                              @NonNull String password) {
-        // call api client
-        // cache token
 
-        MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setEmail("this is test. we have to get data from api client");
-        return Flowable.just(memberEntity);
+        return QrpayService.getRestApiClient().saveMember(email, nickname, password)
+                .map(Response::getResult)
+                .doOnNext(memberEntity -> {
+                    if (!memberEntity.isResult()) {
+                        throw new Exception(memberEntity.getMessage());
+                    }
+                });
+
     }
 
     @Override
     public Flowable<MemberEntity> getMember() {
 
-        // call api client with token
-
-        LogUtils.debug(TAG, "this function complete not yet");
-        MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setEmail("this is test. we have to get data from api client");
-        return Flowable.just(memberEntity);
+        return QrpayService.getRestApiClient().getMember()
+                .map(Response::getResult)
+                .doOnNext(memberEntity -> {
+                    if (!memberEntity.isResult()) {
+                        throw new Exception(memberEntity.getMessage());
+                    }
+                });
     }
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MemberEntity {
+public class MemberEntity extends ResultEntity {
     String email;
     String nickname;
 }
