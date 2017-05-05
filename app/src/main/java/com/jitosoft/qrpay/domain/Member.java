@@ -2,10 +2,12 @@ package com.jitosoft.qrpay.domain;
 
 import android.support.annotation.NonNull;
 
+import lombok.Getter;
+
 /**
  * Created by jihoon on 2017. 4. 29..
  */
-
+@Getter
 public class Member {
 
     String email;

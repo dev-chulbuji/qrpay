@@ -26,10 +26,10 @@ public abstract class UseCase<T> {
         Flowable<T> flowable = buildUseCaseFlowable();
 
         if (executionThread != null) {
-            flowable.subscribeOn(executionThread.getScheduler());
+            flowable = flowable.subscribeOn(executionThread.getScheduler());
         }
         if (postExecutionThread != null) {
-            flowable.observeOn(postExecutionThread.getScheduler());
+            flowable = flowable.observeOn(postExecutionThread.getScheduler());
         }
 
         disposableSubscriber = flowable.subscribeWith(useCaseSubscriber);

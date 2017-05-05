@@ -5,12 +5,15 @@ import android.support.annotation.NonNull;
 import com.jitosoft.qrpay.domain.Member;
 import com.jitosoft.qrpay.domain.interaction.SignUpUseCase;
 import com.jitosoft.qrpay.presentation.mvp.AbsPresenter;
+import com.jitosoft.qrpay.presentation.util.LogUtils;
 
 import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SignUpPresenter extends AbsPresenter<SignUpContract.View> implements SignUpContract.Presenter {
 
-    SignUpUseCase signUpUseCase;
+    private static final String TAG = SignUpPresenter.class.getName();
+
+    private SignUpUseCase signUpUseCase;
 
     public SignUpPresenter(SignUpContract.View view,
                            SignUpUseCase signUpUseCase) {
@@ -31,7 +34,7 @@ public class SignUpPresenter extends AbsPresenter<SignUpContract.View> implement
 
             @Override
             public void onError(Throwable t) {
-
+                LogUtils.error(TAG, t.getMessage());
             }
 
             @Override

@@ -14,8 +14,6 @@ import io.reactivex.Flowable;
 
 public class MemberRemoteDataSource implements MemberDataSource {
 
-    private static final String TAG = MemberRemoteDataSource.class.getName();
-
     @Override
     public Flowable<MemberEntity> saveMember(@NonNull String email,
                                              @NonNull String nickname,

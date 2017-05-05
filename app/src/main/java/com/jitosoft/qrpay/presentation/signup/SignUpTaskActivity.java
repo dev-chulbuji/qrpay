@@ -9,6 +9,7 @@ import com.jitosoft.qrpay.Injection;
 import com.jitosoft.qrpay.R;
 import com.jitosoft.qrpay.data.executor.Executions;
 import com.jitosoft.qrpay.domain.interaction.SignUpUseCase;
+import com.jitosoft.qrpay.presentation.util.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +20,8 @@ import butterknife.OnClick;
  */
 
 public class SignUpTaskActivity extends AppCompatActivity implements SignUpContract.View {
+
+    private static final String TAG = SignUpTaskActivity.class.getName();
 
     @BindView(R.id.email)
     EditText email;
@@ -54,5 +57,7 @@ public class SignUpTaskActivity extends AppCompatActivity implements SignUpContr
     @Override
     public void moveToMainView() {
         // goto main view
+
+        LogUtils.debug(TAG, "moveToMainView");
     }
 }

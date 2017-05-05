@@ -17,7 +17,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QrpayService {
 
-    static RestApiClient restApiClient;
+    // genymotion
+    private static String END_POINT = "http://10.0.3.2:3000";
+
+    // default avd
+    // static String END_POINT = "http://10.0.2.2:3000";
+
+    private static RestApiClient restApiClient;
 
     public static RestApiClient getRestApiClient() {
         if (restApiClient == null) {
@@ -29,7 +35,7 @@ public class QrpayService {
     @NonNull
     private static Retrofit createRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(RestApiClient.END_POINT)
+                .baseUrl(END_POINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(createOkHttpClient())

@@ -35,7 +35,12 @@ public class MemberDataRepository implements MemberRepository {
                                        @NonNull String password) {
         memberDataSource = new MemberRemoteDataSource();
         return memberDataSource.saveMember(email, nickname, password)
-                .map(this::transform);
+                .map(this::transform)
+                .doOnNext(member -> {
+                    if (member == null) {
+                        throw new Exception("member is null");
+                    }
+                });
     }
 
     @Override

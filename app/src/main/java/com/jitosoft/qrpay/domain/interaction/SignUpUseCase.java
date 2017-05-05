@@ -12,10 +12,14 @@ import lombok.Setter;
 
 public class SignUpUseCase extends UseCase<Member> {
 
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Setter
-    String email, nickname, password;
+    String email;
+    @Setter
+    String nickname;
+    @Setter
+    String password;
 
     public SignUpUseCase(@Nullable ExecutionThread executionThread,
                          @Nullable PostExecutionThread postExecutionThread,

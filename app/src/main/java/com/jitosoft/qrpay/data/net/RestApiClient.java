@@ -10,9 +10,6 @@ import retrofit2.http.POST;
 
 public interface RestApiClient {
 
-
-    String END_POINT = "http://localhost:3030";
-
     @FormUrlEncoded
     @POST("/join")
     Flowable<Response<MemberEntity>> saveMember(@Field("email") String email,
