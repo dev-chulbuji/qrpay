@@ -3,7 +3,7 @@ package com.jitosoft.qrpay.domain.repository;
 
 import android.support.annotation.NonNull;
 
-import com.jitosoft.qrpay.domain.Member;
+import com.jitosoft.qrpay.domain.model.Member;
 
 import io.reactivex.Flowable;
 

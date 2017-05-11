@@ -1,4 +1,4 @@
-package com.jitosoft.qrpay.domain;
+package com.jitosoft.qrpay.domain.model;
 
 import android.support.annotation.NonNull;
 

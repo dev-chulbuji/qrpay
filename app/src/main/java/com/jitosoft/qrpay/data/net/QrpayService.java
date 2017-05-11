@@ -17,11 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QrpayService {
 
-    // genymotion
-    private static String END_POINT = "http://10.0.3.2:3000";
-
-    // default avd
-    // static String END_POINT = "http://10.0.2.2:3000";
+    private static String END_POINT = "http://wearhouse.azurewebsites.net";
 
     private static RestApiClient restApiClient;
 

@@ -6,7 +6,7 @@ import com.jitosoft.qrpay.data.datasource.MemberDataSource;
 import com.jitosoft.qrpay.data.datasource.MemberLocalDataSource;
 import com.jitosoft.qrpay.data.datasource.MemberRemoteDataSource;
 import com.jitosoft.qrpay.data.entity.MemberEntity;
-import com.jitosoft.qrpay.domain.Member;
+import com.jitosoft.qrpay.domain.model.Member;
 import com.jitosoft.qrpay.domain.repository.MemberRepository;
 
 import io.reactivex.Flowable;

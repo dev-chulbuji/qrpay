@@ -1,5 +1,6 @@
-package com.jitosoft.qrpay.presentation.signup;
+package com.jitosoft.qrpay.presentation.ui.signup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import com.jitosoft.qrpay.Injection;
 import com.jitosoft.qrpay.R;
 import com.jitosoft.qrpay.data.executor.Executions;
 import com.jitosoft.qrpay.domain.interaction.SignUpUseCase;
-import com.jitosoft.qrpay.presentation.util.LogUtils;
+import com.jitosoft.qrpay.presentation.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,8 +57,10 @@ public class SignUpTaskActivity extends AppCompatActivity implements SignUpContr
 
     @Override
     public void moveToMainView() {
-        // goto main view
 
-        LogUtils.debug(TAG, "moveToMainView");
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        MainActivity.start(this, intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.jitosoft.qrpay.presentation.signup;
+package com.jitosoft.qrpay.presentation.ui.signup;
 
 import android.support.annotation.NonNull;
 

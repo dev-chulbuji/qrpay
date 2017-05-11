@@ -2,7 +2,7 @@ package com.jitosoft.qrpay.domain.interaction;
 
 import android.support.annotation.Nullable;
 
-import com.jitosoft.qrpay.domain.Member;
+import com.jitosoft.qrpay.domain.model.Member;
 import com.jitosoft.qrpay.domain.repository.MemberRepository;
 import com.jitosoft.qrpay.domain.executor.ExecutionThread;
 import com.jitosoft.qrpay.domain.executor.PostExecutionThread;

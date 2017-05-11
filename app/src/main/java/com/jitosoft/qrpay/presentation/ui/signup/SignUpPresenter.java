@@ -1,8 +1,8 @@
-package com.jitosoft.qrpay.presentation.signup;
+package com.jitosoft.qrpay.presentation.ui.signup;
 
 import android.support.annotation.NonNull;
 
-import com.jitosoft.qrpay.domain.Member;
+import com.jitosoft.qrpay.domain.model.Member;
 import com.jitosoft.qrpay.domain.interaction.SignUpUseCase;
 import com.jitosoft.qrpay.presentation.mvp.AbsPresenter;
 import com.jitosoft.qrpay.presentation.util.LogUtils;

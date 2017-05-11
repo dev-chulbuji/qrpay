@@ -1,6 +1,9 @@
 package com.jitosoft.qrpay;
 
+import com.jitosoft.qrpay.data.datasource.CardRemoteDataSource;
+import com.jitosoft.qrpay.data.repository.CardDataRepository;
 import com.jitosoft.qrpay.data.repository.MemberDataRepository;
+import com.jitosoft.qrpay.domain.repository.CardRepository;
 import com.jitosoft.qrpay.domain.repository.MemberRepository;
 
 /**
@@ -11,5 +14,9 @@ public class Injection {
 
     public static MemberRepository provideMemberRepository() {
         return MemberDataRepository.newInstance();
+    }
+
+    public static CardRepository provideCardRepository() {
+        return CardDataRepository.newInstance();
     }
 }
