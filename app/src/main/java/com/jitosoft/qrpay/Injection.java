@@ -1,6 +1,8 @@
 package com.jitosoft.qrpay;
 
-import com.jitosoft.qrpay.data.datasource.CardRemoteDataSource;
+import com.jitosoft.qrpay.data.cache.MemberCache;
+import com.jitosoft.qrpay.data.cache.MemberCacheImpl;
+import com.jitosoft.qrpay.data.datasource.MemberDataSourceFactory;
 import com.jitosoft.qrpay.data.repository.CardDataRepository;
 import com.jitosoft.qrpay.data.repository.MemberDataRepository;
 import com.jitosoft.qrpay.domain.repository.CardRepository;
@@ -13,7 +15,9 @@ import com.jitosoft.qrpay.domain.repository.MemberRepository;
 public class Injection {
 
     public static MemberRepository provideMemberRepository() {
-        return MemberDataRepository.newInstance();
+        MemberCache memberCache = MemberCacheImpl.getInstance();
+        MemberDataSourceFactory memberDataSourceFactory = MemberDataSourceFactory.getInstance(memberCache);
+        return MemberDataRepository.newInstance(memberDataSourceFactory);
     }
 
     public static CardRepository provideCardRepository() {

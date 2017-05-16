@@ -1,8 +1,10 @@
 package com.jitosoft.qrpay.data.net;
 
 import com.jitosoft.qrpay.data.entity.CardEntity;
-import com.jitosoft.qrpay.data.entity.CardListEntity;
 import com.jitosoft.qrpay.data.entity.MemberEntity;
+import com.jitosoft.qrpay.data.entity.ResultEntity;
+
+import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
@@ -15,20 +17,20 @@ public interface RestApiClient {
 
     @FormUrlEncoded
     @POST("/join")
-    Flowable<Response<MemberEntity>> saveMember(@Field("email") String email,
-                                                @Field("nickname") String nickname,
-                                                @Field("password") String password);
+    Flowable<ResultEntity<MemberEntity>> saveMember(@Field("email") String email,
+                                                    @Field("nickname") String nickname,
+                                                    @Field("password") String password);
 
     // use header or email query
     @GET("/users")
-    Flowable<Response<MemberEntity>> getMember();
+    Flowable<ResultEntity<MemberEntity>> getMember();
 
-    @GET("/cards")
-    Flowable<Response<CardListEntity>> getCards(@Path("email") String email);
+    @GET("/cards/{email}")
+    Flowable<ResultEntity<List<CardEntity>>> getCards(@Path("email") String email);
 
     @FormUrlEncoded
     @POST("/cards")
-    Flowable<Response<CardEntity>> createCard(@Field("number") String number,
-                                              @Field("company") String company,
-                                              @Field("cvc") String cvc);
+    Flowable<ResultEntity<CardEntity>> createCard(@Field("number") String number,
+                                                  @Field("company") String company,
+                                                  @Field("cvc") String cvc);
 }

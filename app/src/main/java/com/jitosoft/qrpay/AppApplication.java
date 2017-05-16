@@ -1,5 +1,6 @@
 package com.jitosoft.qrpay;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -13,6 +14,13 @@ import android.support.multidex.MultiDexApplication;
 
 public class AppApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
 
+    @SuppressLint("StaticFieldLeak")
+    private static Context appContext;
+
+    public static Context getAppContext() {
+        return appContext;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         MultiDex.install(base);
@@ -22,6 +30,9 @@ public class AppApplication extends MultiDexApplication implements Application.A
     @Override
     public void onCreate() {
         super.onCreate();
+
+        appContext = this;
+
         registerActivityLifecycleCallbacks(this);
     }
 

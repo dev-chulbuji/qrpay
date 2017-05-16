@@ -2,10 +2,12 @@ package com.jitosoft.qrpay.data.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class MemberEntity extends ResultEntity {
+@ToString
+public class MemberEntity {
     String email;
     String nickname;
 }

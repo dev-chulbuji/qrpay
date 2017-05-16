@@ -8,10 +8,14 @@ public interface MainContract {
     interface View extends BaseView {
 
         void refresh();
+
+        void moveToQrCodeView(String jsonData);
     }
 
     interface Presenter extends BasePresenter<View> {
 
         void loadCards();
+
+        void generateJsonData(int position);
     }
 }

@@ -3,15 +3,15 @@ package com.jitosoft.qrpay.data.datasource;
 import android.support.annotation.NonNull;
 
 import com.jitosoft.qrpay.data.entity.CardEntity;
-import com.jitosoft.qrpay.data.entity.CardListEntity;
 
+import java.util.List;
 
 import io.reactivex.Flowable;
 
 public class CardLocalDataSource implements CardDataSource {
 
     @Override
-    public Flowable<CardListEntity> getCards(@NonNull String email) {
+    public Flowable<List<CardEntity>> getCards(@NonNull String email) {
 
         // TODO: 2017. 5. 9.  get cards from local cache
 

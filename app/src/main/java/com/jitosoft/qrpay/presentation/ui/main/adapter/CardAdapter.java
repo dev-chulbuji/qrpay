@@ -14,10 +14,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.Setter;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>
         implements CardAdapterContract.Model, CardAdapterContract.View {
 
+    @Setter
+    ItemClickListener itemClickListener;
     List<CardDisplayModel> items;
 
     public CardAdapter() {
@@ -32,7 +35,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bindView(items.get(position));
+
+        CardDisplayModel cardDisplayModel = items.get(position);
+
+        holder.bindView(cardDisplayModel);
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClicked(position);
+            }
+        });
     }
 
     @Override
@@ -50,23 +61,35 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public interface ItemClickListener {
+
+        void onItemClicked(int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
+
 
         @BindView(R.id.card_number)
         TextView cardNumber;
+
+        @BindView(R.id.card_name)
+        TextView cardName;
+
         @BindView(R.id.card_company)
         TextView cardCompany;
+
         @BindView(R.id.card_cvc)
         TextView cvc;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bindView(CardDisplayModel cardDisplayModel) {
             cardNumber.setText(cardDisplayModel.getCardNumber());
             cardCompany.setText(cardDisplayModel.getCardCompany());
+            cardName.setText(cardDisplayModel.getName());
             cvc.setText(cardDisplayModel.getCvc());
         }
     }

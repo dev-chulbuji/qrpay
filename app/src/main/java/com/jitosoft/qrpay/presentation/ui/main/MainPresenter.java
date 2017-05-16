@@ -1,11 +1,15 @@
 package com.jitosoft.qrpay.presentation.ui.main;
 
+import com.google.gson.Gson;
 import com.jitosoft.qrpay.domain.interaction.GetCardsUseCase;
 import com.jitosoft.qrpay.domain.model.Card;
 import com.jitosoft.qrpay.domain.model.CardList;
 import com.jitosoft.qrpay.presentation.model.CardDisplayModel;
 import com.jitosoft.qrpay.presentation.mvp.AbsPresenter;
 import com.jitosoft.qrpay.presentation.ui.main.adapter.CardAdapterContract;
+import com.jitosoft.qrpay.presentation.util.LogUtils;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -19,6 +23,7 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
     private GetCardsUseCase getCardsUseCase;
 
     private CardAdapterContract.Model adapterModel;
+    private List<Card> cachedCardList;
 
     public MainPresenter(MainContract.View view,
                          GetCardsUseCase getCardsUseCase) {
@@ -33,6 +38,8 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
             @Override
             public void onNext(CardList cardList) {
                 if (cardList.getCardList().size() > 0) {
+
+                    cachedCardList = cardList.getCardList();
                     adapterModel.setItems(
                             Observable.fromIterable(cardList.getCardList())
                                     .map(card -> transform(card))
@@ -45,7 +52,7 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
 
             @Override
             public void onError(Throwable t) {
-
+                LogUtils.error(MainPresenter.class.getName(), t.getMessage());
             }
 
             @Override
@@ -55,11 +62,20 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
         });
     }
 
+    @Override
+    public void generateJsonData(int position) {
+        if (cachedCardList != null) {
+            String jsonData = new Gson().toJson(cachedCardList.get(position), Card.class);
+            getView().moveToQrCodeView(jsonData);
+        }
+    }
+
     private CardDisplayModel transform(Card card) {
         return new CardDisplayModel.Builder(
                 card.getCompany(),
                 card.getNumber(),
-                card.getCvc())
+                card.getCvc(),
+                card.getName())
                 .build();
     }
 }

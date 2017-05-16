@@ -8,7 +8,6 @@ import com.jitosoft.qrpay.data.datasource.CardDataSource;
 import com.jitosoft.qrpay.data.datasource.CardLocalDataSource;
 import com.jitosoft.qrpay.data.datasource.CardRemoteDataSource;
 import com.jitosoft.qrpay.data.entity.CardEntity;
-import com.jitosoft.qrpay.data.entity.CardListEntity;
 import com.jitosoft.qrpay.domain.model.Card;
 import com.jitosoft.qrpay.domain.model.CardList;
 import com.jitosoft.qrpay.domain.repository.CardRepository;
@@ -60,12 +59,12 @@ public class CardDataRepository implements CardRepository {
         return new Card.Builder(
                 cardEntity.getNumber(),
                 cardEntity.getCompany(),
-                cardEntity.getCvc())
+                cardEntity.getCvc(),
+                cardEntity.getName())
                 .build();
     }
 
-    private CardList transform(CardListEntity cardListEntity) {
-        List<CardEntity> cardEntities = cardListEntity.getCardEntities();
+    private CardList transform(List<CardEntity> cardEntities) {
         CardList cardList = new CardList();
         cardList.setCardList(Observable.fromIterable(MoreObjects.firstNonNull(cardEntities, new ArrayList<>()))
                 .map(this::transform)
