@@ -1,6 +1,7 @@
 package com.jitosoft.qrpay.presentation.ui.main;
 
 import com.google.gson.Gson;
+import com.jitosoft.qrpay.BuildConfig;
 import com.jitosoft.qrpay.domain.interaction.GetCardsUseCase;
 import com.jitosoft.qrpay.domain.model.Card;
 import com.jitosoft.qrpay.domain.model.CardList;
@@ -10,6 +11,7 @@ import com.jitosoft.qrpay.presentation.ui.main.adapter.CardAdapterContract;
 import com.jitosoft.qrpay.presentation.util.LogUtils;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.Observable;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -24,6 +26,8 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
 
     private CardAdapterContract.Model adapterModel;
     private List<Card> cachedCardList;
+    private AtomicInteger atomicInteger = new AtomicInteger(1);
+    private boolean isExistNextPage;
 
     public MainPresenter(MainContract.View view,
                          GetCardsUseCase getCardsUseCase) {
@@ -46,8 +50,49 @@ public class MainPresenter extends AbsPresenter<MainContract.View> implements Ma
                                     .toList()
                                     .blockingGet()
                     );
+
+                    getView().refresh();
                 }
-                getView().refresh();
+
+                // isExistNextPage = cardList.isExistNextPage();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                LogUtils.error(MainPresenter.class.getName(), t.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadCardsMore() {
+        if (!BuildConfig.DEBUG && !isExistNextPage) {
+            return;
+        }
+
+        getCardsUseCase.setPage(atomicInteger.getAndIncrement());
+        getCardsUseCase.setRefresh(true);
+        getCardsUseCase.execute(new DisposableSubscriber<CardList>() {
+            @Override
+            public void onNext(CardList cardList) {
+                if (cardList.getCardList().size() > 0) {
+
+                    cachedCardList = cardList.getCardList();
+                    adapterModel.addAll(
+                            Observable.fromIterable(cardList.getCardList())
+                                    .map(card -> transform(card))
+                                    .toList()
+                                    .blockingGet()
+                    );
+
+                    getView().refresh();
+                }
+                // isExistNextPage = cardList.isExistNextPage();
             }
 
             @Override

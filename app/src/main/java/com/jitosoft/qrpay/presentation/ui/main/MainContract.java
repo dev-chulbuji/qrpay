@@ -16,6 +16,8 @@ public interface MainContract {
 
         void loadCards();
 
+        void loadCardsMore();
+
         void generateJsonData(int position);
     }
 }

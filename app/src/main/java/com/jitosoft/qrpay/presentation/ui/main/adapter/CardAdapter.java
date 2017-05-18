@@ -57,6 +57,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>
     }
 
     @Override
+    public void addAll(List<CardDisplayModel> items) {
+        this.items.addAll(items);
+    }
+
+    @Override
     public void refresh() {
         notifyDataSetChanged();
     }

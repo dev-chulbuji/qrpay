@@ -7,8 +7,6 @@ import com.jitosoft.qrpay.domain.executor.PostExecutionThread;
 import com.jitosoft.qrpay.domain.model.CardList;
 import com.jitosoft.qrpay.domain.repository.CardRepository;
 import com.jitosoft.qrpay.domain.repository.MemberRepository;
-import com.jitosoft.qrpay.presentation.util.LogUtils;
-
 
 import io.reactivex.Flowable;
 import lombok.Setter;
@@ -20,6 +18,9 @@ public class GetCardsUseCase extends UseCase<CardList> {
 
     @Setter
     boolean refresh;
+
+    @Setter
+    int page;
 
     public GetCardsUseCase(CardRepository cardRepository,
                            MemberRepository memberRepository,
@@ -34,9 +35,6 @@ public class GetCardsUseCase extends UseCase<CardList> {
     @Override
     protected Flowable<CardList> buildUseCaseFlowable() {
         return memberRepository.getMember()
-                .flatMap(member -> {
-                    LogUtils.info(GetCardsUseCase.class.getName(), "email : " + member.getEmail());
-                    return cardRepository.getCards(refresh, member.getEmail());
-                });
+                .flatMap(member -> cardRepository.getCards(refresh, member.getEmail(), page));
     }
 }

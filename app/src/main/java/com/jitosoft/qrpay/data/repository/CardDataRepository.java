@@ -34,7 +34,9 @@ public class CardDataRepository implements CardRepository {
     }
 
     @Override
-    public Flowable<CardList> getCards(@Nullable boolean refresh, @NonNull String email) {
+    public Flowable<CardList> getCards(@Nullable boolean refresh,
+                                       @NonNull String email,
+                                       @NonNull int page) {
         CardDataSource cardDataSource;
         if (refresh) {
             cardDataSource = new CardRemoteDataSource();
@@ -42,7 +44,7 @@ public class CardDataRepository implements CardRepository {
             cardDataSource = new CardLocalDataSource();
         }
 
-        return cardDataSource.getCards(email)
+        return cardDataSource.getCards(email, page)
                 .map(this::transform);
 
 

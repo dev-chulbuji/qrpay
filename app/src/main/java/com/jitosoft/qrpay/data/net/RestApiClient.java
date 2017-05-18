@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RestApiClient {
 
@@ -26,7 +27,8 @@ public interface RestApiClient {
     Flowable<ResultEntity<MemberEntity>> getMember();
 
     @GET("/cards/{email}")
-    Flowable<ResultEntity<List<CardEntity>>> getCards(@Path("email") String email);
+    Flowable<ResultEntity<List<CardEntity>>> getCards(@Path("email") String email,
+                                                      @Query("page") int page);
 
     @FormUrlEncoded
     @POST("/cards")

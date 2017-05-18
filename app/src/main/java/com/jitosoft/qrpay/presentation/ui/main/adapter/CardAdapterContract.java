@@ -12,6 +12,8 @@ public interface CardAdapterContract {
 
     interface Model {
         void setItems(List<CardDisplayModel> items);
+
+        void addAll(List<CardDisplayModel> items);
     }
 
 }

@@ -14,8 +14,9 @@ import io.reactivex.Flowable;
 public class CardRemoteDataSource implements CardDataSource {
 
     @Override
-    public Flowable<List<CardEntity>> getCards(@NonNull String email) {
-        return QrpayService.getRestApiClient().getCards(email)
+    public Flowable<List<CardEntity>> getCards(@NonNull String email,
+                                               @NonNull int page) {
+        return QrpayService.getRestApiClient().getCards(email, page)
                 .filter(ResultEntity::isResult)
                 .map(ResultEntity::getData)
                 .doOnNext(cardListEntity -> {

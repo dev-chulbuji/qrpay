@@ -37,6 +37,8 @@ public class QrCodeActivity extends AppCompatActivity {
 
         String data = ((String) getIntent().getSerializableExtra(QRCODE_DATA));
 
+
+        // TODO: 2017. 5. 18. move to presenter
         try {
             QRCodeGenerator.encodeAsBitmap(data, 300, 300)
                     .subscribeOn(Schedulers.io())

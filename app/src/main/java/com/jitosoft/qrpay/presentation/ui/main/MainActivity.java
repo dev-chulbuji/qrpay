@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     RecyclerView recyclerView;
     private MainContract.Presenter presenter;
     private CardAdapterContract.View adapterView;
+    private LinearLayoutManager layoutManager;
 
     public static void start(Activity activity, Intent intent) {
         activity.startActivity(intent);
@@ -51,7 +53,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         adapterView = cardAdapter;
 
         recyclerView.setAdapter(cardAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        setRecyclerViewOnScrollListener();
 
         presenter = new MainPresenter(this, getCardsUseCase)
                 .setAdapterModel(cardAdapter);
@@ -61,6 +69,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         cardAdapter.setItemClickListener(position ->
                 presenter.generateJsonData(position)
         );
+    }
+
+    private void setRecyclerViewOnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            final static int VISIBLE_THRESHOLD = 8;
+            int prevTotalItemCount = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+
+                if (prevTotalItemCount != totalItemCount && totalItemCount - lastVisibleItem <= VISIBLE_THRESHOLD) {
+                    presenter.loadCardsMore();
+                    prevTotalItemCount = totalItemCount;
+                }
+            }
+        });
     }
 
     @Override
